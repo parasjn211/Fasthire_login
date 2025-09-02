@@ -37,25 +37,27 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(token)) {
                 String email = jwtUtil.extractEmail(token);
 
-                // ✅ Extract permissions from token
+                // ✅ Extract role & permissions
+                String role = jwtUtil.extractClaim(token, "role", String.class);
                 boolean canCreate = jwtUtil.extractClaim(token, "canCreate", Boolean.class);
                 boolean canUpdate = jwtUtil.extractClaim(token, "canUpdate", Boolean.class);
                 boolean canDelete = jwtUtil.extractClaim(token, "canDelete", Boolean.class);
                 boolean canRead   = jwtUtil.extractClaim(token, "canRead", Boolean.class);
 
-                // ✅ Convert to authorities
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 if (canCreate) authorities.add(() -> "CAN_CREATE");
                 if (canUpdate) authorities.add(() -> "CAN_UPDATE");
                 if (canDelete) authorities.add(() -> "CAN_DELETE");
                 if (canRead)   authorities.add(() -> "CAN_READ");
 
+                // Also add role itself
+                authorities.add(() -> "ROLE_" + role);
+
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(email, null, authorities);
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // ✅ Set authentication in context
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

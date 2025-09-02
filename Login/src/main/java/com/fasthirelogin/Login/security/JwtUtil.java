@@ -1,5 +1,6 @@
 package com.fasthirelogin.Login.security;
 
+import com.fasthirelogin.Login.entity.Employer;
 import com.fasthirelogin.Login.entity.SuperAdmin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -19,17 +20,34 @@ public class JwtUtil {
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
-    // ✅ Generate token from SuperAdmin object
+    // ✅ Generate token for SuperAdmin
     public String generateToken(SuperAdmin admin) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("canCreate", admin.isCanCreate());
         claims.put("canUpdate", admin.isCanUpdate());
         claims.put("canDelete", admin.isCanDelete());
         claims.put("canRead", admin.isCanRead());
+        claims.put("role", "SUPERADMIN");
 
+        return buildToken(claims, admin.getEmail());
+    }
+
+    // ✅ Generate token for Employer
+    public String generateToken(Employer employer) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("canCreate", employer.isCanCreate());
+        claims.put("canUpdate", employer.isCanUpdate());
+        claims.put("canDelete", employer.isCanDelete());
+        claims.put("canRead", employer.isCanRead());
+        claims.put("role", "EMPLOYER");
+
+        return buildToken(claims, employer.getEmail());
+    }
+
+    private String buildToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(admin.getEmail()) // email as subject
+                .setSubject(subject)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
@@ -54,10 +72,10 @@ public class JwtUtil {
         return clazz.cast(value);
     }
 
-    // ✅ Validate token (expiration + signature)
+    // ✅ Validate token
     public boolean validateToken(String token) {
         try {
-            extractAllClaims(token); // will throw if invalid
+            extractAllClaims(token);
             return !isTokenExpired(token);
         } catch (Exception e) {
             return false;

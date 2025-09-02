@@ -13,7 +13,6 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
 
-    // ✅ Inject JwtAuthFilter bean
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
@@ -23,20 +22,23 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Public APIs
+                        // ✅ Public APIs
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/superadmin/createSuperAdmin").permitAll() // ✅ allow creating SuperAdmin without JWT
 
-                        // Protected APIs (need JWT + permissions)
+                        // ✅ SuperAdmin Endpoints
+                        .requestMatchers("/superadmin/createSuperAdmin").permitAll()
                         .requestMatchers("/superadmin/getAllSuperAdmins").hasAuthority("CAN_READ")
                         .requestMatchers("/superadmin/updateSuperAdmin/**").hasAuthority("CAN_UPDATE")
                         .requestMatchers("/superadmin/deleteSuperAdmin/**").hasAuthority("CAN_DELETE")
 
-                        // Everything else
+                        // ✅ Employer Endpoints
+                        .requestMatchers("/employers").permitAll() // allow creating employer
+                        .requestMatchers("/employers/**").hasRole("EMPLOYER") // all other employer APIs require EMPLOYER role
+
+                        // ✅ Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // ✅ add JWT filter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

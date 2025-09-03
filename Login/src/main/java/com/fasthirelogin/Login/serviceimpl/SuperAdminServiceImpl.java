@@ -58,9 +58,6 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         if (admin.getState() != null && !admin.getState().isBlank()) {
             existing.setState(admin.getState());
         }
-        if (admin.getRegistrationNumber() != null && !admin.getRegistrationNumber().isBlank()) {
-            existing.setRegistrationNumber(admin.getRegistrationNumber());
-        }
         if (admin.getAadhar() != null) {
             existing.setAadhar(admin.getAadhar());
         }

@@ -22,7 +22,6 @@ public class SuperAdmin {
     private String address;
     private String city;
     private String state;
-    private String registrationNumber;
     private Long aadhar;
     private String pancard;
     private String country;

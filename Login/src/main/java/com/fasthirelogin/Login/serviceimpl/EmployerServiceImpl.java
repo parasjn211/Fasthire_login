@@ -1,4 +1,5 @@
 package com.fasthirelogin.Login.serviceimpl;
+
 import com.fasthirelogin.Login.entity.Employer;
 import com.fasthirelogin.Login.repository.EmployerRepository;
 import com.fasthirelogin.Login.service.EmployerService;
@@ -26,7 +27,7 @@ public class EmployerServiceImpl implements EmployerService {
         return employerRepository.findById(id)
                 .map(existingEmployer -> {
 
-                    // ✅ Update only if not null (partial update)
+                    // 🔑 Basic Info
                     if (employer.getCompanyName() != null && !employer.getCompanyName().isBlank()) {
                         existingEmployer.setCompanyName(employer.getCompanyName());
                     }
@@ -40,14 +41,73 @@ public class EmployerServiceImpl implements EmployerService {
                         existingEmployer.setPassword(employer.getPassword());
                     }
 
-                    // ✅ Booleans (we always take request value)
+                    // 🔑 Company Details
+                    if (employer.getCompanyWebsite() != null && !employer.getCompanyWebsite().isBlank()) {
+                        existingEmployer.setCompanyWebsite(employer.getCompanyWebsite());
+                    }
+                    if (employer.getCompanyLogoUrl() != null && !employer.getCompanyLogoUrl().isBlank()) {
+                        existingEmployer.setCompanyLogoUrl(employer.getCompanyLogoUrl());
+                    }
+                    if (employer.getIndustry() != null && !employer.getIndustry().isBlank()) {
+                        existingEmployer.setIndustry(employer.getIndustry());
+                    }
+                    if (employer.getCompanySize() != null && !employer.getCompanySize().isBlank()) {
+                        existingEmployer.setCompanySize(employer.getCompanySize());
+                    }
+                    if (employer.getFoundedYear() != null && !employer.getFoundedYear().isBlank()) {
+                        existingEmployer.setFoundedYear(employer.getFoundedYear());
+                    }
+                    if (employer.getAboutCompany() != null && !employer.getAboutCompany().isBlank()) {
+                        existingEmployer.setAboutCompany(employer.getAboutCompany());
+                    }
+
+                    // 🔑 Contact Info
+                    if (employer.getPhoneNumber() != null && !employer.getPhoneNumber().isBlank()) {
+                        existingEmployer.setPhoneNumber(employer.getPhoneNumber());
+                    }
+                    if (employer.getAlternatePhone() != null && !employer.getAlternatePhone().isBlank()) {
+                        existingEmployer.setAlternatePhone(employer.getAlternatePhone());
+                    }
+                    if (employer.getAddress() != null && !employer.getAddress().isBlank()) {
+                        existingEmployer.setAddress(employer.getAddress());
+                    }
+                    if (employer.getCity() != null && !employer.getCity().isBlank()) {
+                        existingEmployer.setCity(employer.getCity());
+                    }
+                    if (employer.getDistrict() != null && !employer.getDistrict().isBlank()) {
+                        existingEmployer.setDistrict(employer.getDistrict());
+                    }
+                    if (employer.getState() != null && !employer.getState().isBlank()) {
+                        existingEmployer.setState(employer.getState());
+                    }
+                    if (employer.getCountry() != null && !employer.getCountry().isBlank()) {
+                        existingEmployer.setCountry(employer.getCountry());
+                    }
+                    if (employer.getPinCode() != null && !employer.getPinCode().isBlank()) {
+                        existingEmployer.setPinCode(employer.getPinCode());
+                    }
+
+                    // 🔑 Compliance
+                    if (employer.getRegistrationNumber() != null && !employer.getRegistrationNumber().isBlank()) {
+                        existingEmployer.setRegistrationNumber(employer.getRegistrationNumber());
+                    }
+                    if (employer.getGstNumber() != null && !employer.getGstNumber().isBlank()) {
+                        existingEmployer.setGstNumber(employer.getGstNumber());
+                    }
+                    existingEmployer.setDocumentsVerified(employer.isDocumentsVerified());
+
+                    // 🔑 Job posting details
+                    existingEmployer.setJobPostLimit(employer.getJobPostLimit());
+                    existingEmployer.setRemainingPosts(employer.getRemainingPosts());
+
+                    // 🔑 Permissions & Approval
                     existingEmployer.setApproved(employer.isApproved());
                     existingEmployer.setCanCreate(employer.isCanCreate());
                     existingEmployer.setCanUpdate(employer.isCanUpdate());
                     existingEmployer.setCanDelete(employer.isCanDelete());
                     existingEmployer.setCanRead(employer.isCanRead());
 
-                    // ✅ Update role if provided
+                    // 🔑 Role
                     if (employer.getRole() != null) {
                         existingEmployer.setRole(employer.getRole());
                     }

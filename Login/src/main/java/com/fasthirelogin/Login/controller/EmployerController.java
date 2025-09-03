@@ -18,20 +18,20 @@ public class EmployerController {
 
 
     // ✅ Update Employer
-    @PutMapping("/{id}")
+    @PutMapping("updateEmployer/{id}")
     public ResponseEntity<Employer> updateEmployer(@PathVariable Long id, @RequestBody Employer employer) {
         return ResponseEntity.ok(employerService.updateEmployer(id, employer));
     }
 
     // ✅ Delete Employer
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deleteEmployer/{id}")
     public ResponseEntity<String> deleteEmployer(@PathVariable Long id) {
         employerService.deleteEmployer(id);
         return ResponseEntity.ok("Employer deleted successfully");
     }
 
     // ✅ Get Employer by ID
-    @GetMapping("/{id}")
+    @GetMapping("getEmployerById/{id}")
     public ResponseEntity<Employer> getEmployerById(@PathVariable Long id) {
         return employerService.getEmployerById(id)
                 .map(ResponseEntity::ok)
@@ -39,7 +39,7 @@ public class EmployerController {
     }
 
     // ✅ Get All Employers
-    @GetMapping
+    @GetMapping("/getAllEmployers")
     public ResponseEntity<List<Employer>> getAllEmployers() {
         return ResponseEntity.ok(employerService.getAllEmployers());
     }

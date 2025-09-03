@@ -32,8 +32,8 @@ public class AuthController {
     }
 
     // ✅ SuperAdmin Login
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody SuperAdmin loginRequest) {
+    @PostMapping("/superAdminLogin")
+    public ResponseEntity<?> superAdminLogin(@RequestBody SuperAdmin loginRequest) {
         Optional<SuperAdmin> adminOpt = superAdminRepo.findByEmail(loginRequest.getEmail());
 
         if (adminOpt.isPresent()) {

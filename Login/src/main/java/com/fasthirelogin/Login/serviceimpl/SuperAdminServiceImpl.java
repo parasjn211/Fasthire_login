@@ -40,8 +40,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         if (admin.getEmail() != null && !admin.getEmail().isBlank()) {
             existing.setEmail(admin.getEmail());
         }
-        if (admin.getPhoneNumber() != null && !admin.getPhoneNumber().isBlank()) {
-            existing.setPhoneNumber(admin.getPhoneNumber());
+        if (admin.getPassword() != null && !admin.getPassword().isBlank()) {
+            existing.setPassword(passwordEncoder.encode(admin.getPassword()));
         }
         if (admin.getAdminName() != null && !admin.getAdminName().isBlank()) {
             existing.setAdminName(admin.getAdminName());
@@ -49,14 +49,26 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         if (admin.getMobileNumber() != null && !admin.getMobileNumber().isBlank()) {
             existing.setMobileNumber(admin.getMobileNumber());
         }
+        if (admin.getAlternatePhone() != null && !admin.getAlternatePhone().isBlank()) {
+            existing.setAlternatePhone(admin.getAlternatePhone());
+        }
         if (admin.getAddress() != null && !admin.getAddress().isBlank()) {
             existing.setAddress(admin.getAddress());
         }
         if (admin.getCity() != null && !admin.getCity().isBlank()) {
             existing.setCity(admin.getCity());
         }
+        if (admin.getDistrict() != null && !admin.getDistrict().isBlank()) {
+            existing.setDistrict(admin.getDistrict());
+        }
         if (admin.getState() != null && !admin.getState().isBlank()) {
             existing.setState(admin.getState());
+        }
+        if (admin.getCountry() != null && !admin.getCountry().isBlank()) {
+            existing.setCountry(admin.getCountry());
+        }
+        if (admin.getPinCode() != null && !admin.getPinCode().isBlank()) {   // ✅ New field update
+            existing.setPinCode(admin.getPinCode());
         }
         if (admin.getAadhar() != null) {
             existing.setAadhar(admin.getAadhar());
@@ -64,16 +76,17 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         if (admin.getPancard() != null && !admin.getPancard().isBlank()) {
             existing.setPancard(admin.getPancard());
         }
-        if (admin.getCountry() != null && !admin.getCountry().isBlank()) {
-            existing.setCountry(admin.getCountry());
+        if (admin.getOrganizationName() != null && !admin.getOrganizationName().isBlank()) {
+            existing.setOrganizationName(admin.getOrganizationName());
+        }
+        if (admin.getDesignation() != null && !admin.getDesignation().isBlank()) {
+            existing.setDesignation(admin.getDesignation());
+        }
+        if (admin.getProfileImageUrl() != null && !admin.getProfileImageUrl().isBlank()) {
+            existing.setProfileImageUrl(admin.getProfileImageUrl());
         }
 
-        // ✅ Update password only if new password provided
-        if (admin.getPassword() != null && !admin.getPassword().isBlank()) {
-            existing.setPassword(passwordEncoder.encode(admin.getPassword()));
-        }
-
-        // ✅ Update permissions (booleans don’t need null check since default = false)
+        // ✅ Update permissions (booleans directly taken from request)
         existing.setCanCreate(admin.isCanCreate());
         existing.setCanUpdate(admin.isCanUpdate());
         existing.setCanDelete(admin.isCanDelete());

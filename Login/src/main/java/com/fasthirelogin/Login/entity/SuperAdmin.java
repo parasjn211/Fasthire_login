@@ -9,30 +9,46 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SuperAdmin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // 🔑 Basic authentication
     @Column(nullable = false, unique = true)
     private String email;
-    private String  phoneNumber;
     @Column(nullable = false)
     private String password;
+
+    // 🔑 Personal details
     private String adminName;
     private String mobileNumber;
+    private String alternatePhone;
     private String address;
     private String city;
+    private String district;
     private String state;
+    private String country;
+    private String pinCode;
+
+    // 🔑 Identity
     private Long aadhar;
     private String pancard;
-    private String country;
 
+    // 🔑 Organization
+    private String organizationName;
+    private String designation;
+
+    // 🔑 Permissions
     private boolean canCreate;
     private boolean canUpdate;
     private boolean canDelete;
     private boolean canRead;
 
+    // 🔑 Preferences
+    private String profileImageUrl;
+
     @Enumerated(EnumType.STRING)
     private Role role = Role.SUPERADMIN;
 
 }
-

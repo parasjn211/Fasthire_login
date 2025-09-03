@@ -25,17 +25,36 @@ public class EmployerServiceImpl implements EmployerService {
     public Employer updateEmployer(Long id, Employer employer) {
         return employerRepository.findById(id)
                 .map(existingEmployer -> {
-                    existingEmployer.setCompanyName(employer.getCompanyName());
-                    existingEmployer.setContactPerson(employer.getContactPerson());
-                    existingEmployer.setEmail(employer.getEmail());
-                    existingEmployer.setPassword(employer.getPassword());
+
+                    // ✅ Update only if not null (partial update)
+                    if (employer.getCompanyName() != null && !employer.getCompanyName().isBlank()) {
+                        existingEmployer.setCompanyName(employer.getCompanyName());
+                    }
+                    if (employer.getContactPerson() != null && !employer.getContactPerson().isBlank()) {
+                        existingEmployer.setContactPerson(employer.getContactPerson());
+                    }
+                    if (employer.getEmail() != null && !employer.getEmail().isBlank()) {
+                        existingEmployer.setEmail(employer.getEmail());
+                    }
+                    if (employer.getPassword() != null && !employer.getPassword().isBlank()) {
+                        existingEmployer.setPassword(employer.getPassword());
+                    }
+
+                    // ✅ Booleans (we always take request value)
                     existingEmployer.setApproved(employer.isApproved());
                     existingEmployer.setCanCreate(employer.isCanCreate());
                     existingEmployer.setCanUpdate(employer.isCanUpdate());
                     existingEmployer.setCanDelete(employer.isCanDelete());
                     existingEmployer.setCanRead(employer.isCanRead());
+
+                    // ✅ Update role if provided
+                    if (employer.getRole() != null) {
+                        existingEmployer.setRole(employer.getRole());
+                    }
+
                     return employerRepository.save(existingEmployer);
-                }).orElseThrow(() -> new RuntimeException("Employer not found with id: " + id));
+                })
+                .orElseThrow(() -> new RuntimeException("Employer not found with id: " + id));
     }
 
     @Override

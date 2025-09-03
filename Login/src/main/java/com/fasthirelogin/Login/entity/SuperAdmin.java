@@ -12,10 +12,20 @@ public class SuperAdmin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false, unique = true)
     private String email;
-
+    private String  phoneNumber;
+    @Column(nullable = false)
     private String password;
+    private String adminName;
+    private String mobileNumber;
+    private String address;
+    private String city;
+    private String state;
+    private String registrationNumber;
+    private Long aadhar;
+    private String pancard;
+    private String country;
 
     private boolean canCreate;
     private boolean canUpdate;

@@ -51,8 +51,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         if (admin.getMobileNumber() != null && !admin.getMobileNumber().isBlank()) {
             existing.setMobileNumber(admin.getMobileNumber());
         }
-        if (admin.getAlternatePhone() != null && !admin.getAlternatePhone().isBlank()) {
-            existing.setAlternatePhone(admin.getAlternatePhone());
+        if (admin.getPhone() != null && !admin.getPhone().isBlank()) {
+            existing.setPhone(admin.getPhone());
         }
         if (admin.getAddress() != null && !admin.getAddress().isBlank()) {
             existing.setAddress(admin.getAddress());
@@ -74,11 +74,11 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         }
 
         // ✅ Identity
-        if (admin.getAadhar() != null) {
-            existing.setAadhar(admin.getAadhar());
+        if (admin.getAadharNo() != null) {
+            existing.setAadharNo(admin.getAadharNo());
         }
-        if (admin.getPancard() != null && !admin.getPancard().isBlank()) {
-            existing.setPancard(admin.getPancard());
+        if (admin.getPancardNo() != null && !admin.getPancardNo().isBlank()) {
+            existing.setPancardNo(admin.getPancardNo());
         }
 
         // ✅ GST details

@@ -1,12 +1,12 @@
 package com.fasthirelogin.Login.service;
 
-import com.fasthirelogin.Login.entity.SuperAdmin;
+import com.fasthirelogin.Login.entity.FastHireSuperAdmin;
 
 import java.util.List;
 
 public interface SuperAdminService {
-    SuperAdmin create(SuperAdmin admin);
-    List<SuperAdmin> getAll();
-    SuperAdmin update(Long id, SuperAdmin admin);
+    FastHireSuperAdmin create(FastHireSuperAdmin admin);
+    List<FastHireSuperAdmin> getAll();
+    FastHireSuperAdmin update(Long id, FastHireSuperAdmin admin);
     void delete(Long id);
 }

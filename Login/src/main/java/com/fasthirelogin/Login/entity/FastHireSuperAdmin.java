@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SuperAdmin {
+public class FastHireSuperAdmin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +35,8 @@ public class SuperAdmin {
     private Long aadhar;
     private String pancard;
 
-    // 🔑 Organization
-    private String organizationName;
-    private String designation;
+    //Gst details
+    private String gstNumber;
 
     // 🔑 Permissions
     private boolean canCreate;

@@ -1,7 +1,7 @@
 package com.fasthirelogin.Login.security;
 
-import com.fasthirelogin.Login.entity.Employer;
-import com.fasthirelogin.Login.entity.SuperAdmin;
+import com.fasthirelogin.Login.entity.FastHireEmployer;
+import com.fasthirelogin.Login.entity.FastHireSuperAdmin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,7 +21,7 @@ public class JwtUtil {
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
     // ✅ Generate token for SuperAdmin
-    public String generateToken(SuperAdmin admin) {
+    public String generateToken(FastHireSuperAdmin admin) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("canCreate", admin.isCanCreate());
         claims.put("canUpdate", admin.isCanUpdate());
@@ -33,7 +33,7 @@ public class JwtUtil {
     }
 
     // ✅ Generate token for Employer
-    public String generateToken(Employer employer) {
+    public String generateToken(FastHireEmployer employer) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("canCreate", employer.isCanCreate());
         claims.put("canUpdate", employer.isCanUpdate());

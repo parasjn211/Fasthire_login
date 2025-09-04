@@ -1,6 +1,6 @@
 package com.fasthirelogin.Login.serviceimpl;
 
-import com.fasthirelogin.Login.entity.SuperAdmin;
+import com.fasthirelogin.Login.entity.FastHireSuperAdmin;
 import com.fasthirelogin.Login.repository.SuperAdminRepository;
 import com.fasthirelogin.Login.service.SuperAdminService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,29 +20,31 @@ public class SuperAdminServiceImpl implements SuperAdminService {
     }
 
     @Override
-    public SuperAdmin create(SuperAdmin admin) {
+    public FastHireSuperAdmin create(FastHireSuperAdmin admin) {
         // ✅ Encode password before saving
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return repo.save(admin);
     }
 
     @Override
-    public List<SuperAdmin> getAll() {
+    public List<FastHireSuperAdmin> getAll() {
         return repo.findAll();
     }
 
     @Override
-    public SuperAdmin update(Long id, SuperAdmin admin) {
-        SuperAdmin existing = repo.findById(id)
+    public FastHireSuperAdmin update(Long id, FastHireSuperAdmin admin) {
+        FastHireSuperAdmin existing = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("SuperAdmin not found with id: " + id));
 
-        // ✅ Update only if not null (partial update)
+        // ✅ Basic authentication
         if (admin.getEmail() != null && !admin.getEmail().isBlank()) {
             existing.setEmail(admin.getEmail());
         }
         if (admin.getPassword() != null && !admin.getPassword().isBlank()) {
             existing.setPassword(passwordEncoder.encode(admin.getPassword()));
         }
+
+        // ✅ Personal details
         if (admin.getAdminName() != null && !admin.getAdminName().isBlank()) {
             existing.setAdminName(admin.getAdminName());
         }
@@ -67,32 +69,35 @@ public class SuperAdminServiceImpl implements SuperAdminService {
         if (admin.getCountry() != null && !admin.getCountry().isBlank()) {
             existing.setCountry(admin.getCountry());
         }
-        if (admin.getPinCode() != null && !admin.getPinCode().isBlank()) {   // ✅ New field update
+        if (admin.getPinCode() != null && !admin.getPinCode().isBlank()) {
             existing.setPinCode(admin.getPinCode());
         }
+
+        // ✅ Identity
         if (admin.getAadhar() != null) {
             existing.setAadhar(admin.getAadhar());
         }
         if (admin.getPancard() != null && !admin.getPancard().isBlank()) {
             existing.setPancard(admin.getPancard());
         }
-        if (admin.getOrganizationName() != null && !admin.getOrganizationName().isBlank()) {
-            existing.setOrganizationName(admin.getOrganizationName());
+
+        // ✅ GST details
+        if (admin.getGstNumber() != null && !admin.getGstNumber().isBlank()) {
+            existing.setGstNumber(admin.getGstNumber());
         }
-        if (admin.getDesignation() != null && !admin.getDesignation().isBlank()) {
-            existing.setDesignation(admin.getDesignation());
-        }
+
+        // ✅ Preferences
         if (admin.getProfileImageUrl() != null && !admin.getProfileImageUrl().isBlank()) {
             existing.setProfileImageUrl(admin.getProfileImageUrl());
         }
 
-        // ✅ Update permissions (booleans directly taken from request)
+        // ✅ Permissions
         existing.setCanCreate(admin.isCanCreate());
         existing.setCanUpdate(admin.isCanUpdate());
         existing.setCanDelete(admin.isCanDelete());
         existing.setCanRead(admin.isCanRead());
 
-        // ✅ Update role if provided
+        // ✅ Role
         if (admin.getRole() != null) {
             existing.setRole(admin.getRole());
         }

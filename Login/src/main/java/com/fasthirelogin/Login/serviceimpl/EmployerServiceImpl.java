@@ -1,6 +1,6 @@
 package com.fasthirelogin.Login.serviceimpl;
 
-import com.fasthirelogin.Login.entity.Employer;
+import com.fasthirelogin.Login.entity.FastHireEmployer;
 import com.fasthirelogin.Login.repository.EmployerRepository;
 import com.fasthirelogin.Login.service.EmployerService;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public Employer createEmployer(Employer employer) {
+    public FastHireEmployer createEmployer(FastHireEmployer employer) {
         return employerRepository.save(employer);
     }
 
     @Override
-    public Employer updateEmployer(Long id, Employer employer) {
+    public FastHireEmployer updateEmployer(Long id, FastHireEmployer employer) {
         return employerRepository.findById(id)
                 .map(existingEmployer -> {
 
@@ -126,12 +126,12 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public Optional<Employer> getEmployerById(Long id) {
+    public Optional<FastHireEmployer> getEmployerById(Long id) {
         return employerRepository.findById(id);
     }
 
     @Override
-    public List<Employer> getAllEmployers() {
+    public List<FastHireEmployer> getAllEmployers() {
         return employerRepository.findAll();
     }
 }

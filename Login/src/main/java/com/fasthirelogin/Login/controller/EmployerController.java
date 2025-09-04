@@ -1,5 +1,5 @@
 package com.fasthirelogin.Login.controller;
-import com.fasthirelogin.Login.entity.Employer;
+import com.fasthirelogin.Login.entity.FastHireEmployer;
 import com.fasthirelogin.Login.service.EmployerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class EmployerController {
 
     // ✅ Update Employer
     @PutMapping("updateEmployer/{id}")
-    public ResponseEntity<Employer> updateEmployer(@PathVariable Long id, @RequestBody Employer employer) {
+    public ResponseEntity<FastHireEmployer> updateEmployer(@PathVariable Long id, @RequestBody FastHireEmployer employer) {
         return ResponseEntity.ok(employerService.updateEmployer(id, employer));
     }
 
@@ -32,7 +32,7 @@ public class EmployerController {
 
     // ✅ Get Employer by ID
     @GetMapping("getEmployerById/{id}")
-    public ResponseEntity<Employer> getEmployerById(@PathVariable Long id) {
+    public ResponseEntity<FastHireEmployer> getEmployerById(@PathVariable Long id) {
         return employerService.getEmployerById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -40,7 +40,7 @@ public class EmployerController {
 
     // ✅ Get All Employers
     @GetMapping("/getAllEmployers")
-    public ResponseEntity<List<Employer>> getAllEmployers() {
+    public ResponseEntity<List<FastHireEmployer>> getAllEmployers() {
         return ResponseEntity.ok(employerService.getAllEmployers());
     }
 }

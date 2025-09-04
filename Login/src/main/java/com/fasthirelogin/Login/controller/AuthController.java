@@ -1,7 +1,7 @@
 package com.fasthirelogin.Login.controller;
 
-import com.fasthirelogin.Login.entity.Employer;
-import com.fasthirelogin.Login.entity.SuperAdmin;
+import com.fasthirelogin.Login.entity.FastHireEmployer;
+import com.fasthirelogin.Login.entity.FastHireSuperAdmin;
 import com.fasthirelogin.Login.repository.EmployerRepository;
 import com.fasthirelogin.Login.repository.SuperAdminRepository;
 import com.fasthirelogin.Login.security.JwtUtil;
@@ -33,11 +33,11 @@ public class AuthController {
 
     // ✅ SuperAdmin Login
     @PostMapping("/superAdminLogin")
-    public ResponseEntity<?> superAdminLogin(@RequestBody SuperAdmin loginRequest) {
-        Optional<SuperAdmin> adminOpt = superAdminRepo.findByEmail(loginRequest.getEmail());
+    public ResponseEntity<?> superAdminLogin(@RequestBody FastHireSuperAdmin loginRequest) {
+        Optional<FastHireSuperAdmin> adminOpt = superAdminRepo.findByEmail(loginRequest.getEmail());
 
         if (adminOpt.isPresent()) {
-            SuperAdmin admin = adminOpt.get();
+            FastHireSuperAdmin admin = adminOpt.get();
             if (passwordEncoder.matches(loginRequest.getPassword(), admin.getPassword())) {
                 String token = jwtUtil.generateToken(admin);
                 return ResponseEntity.ok(Map.of("token", token, "email", admin.getEmail(), "role", "SUPERADMIN"));
@@ -48,20 +48,20 @@ public class AuthController {
 
     // ✅ Employer Registration
     @PostMapping("/registerEmployer")
-    public ResponseEntity<?> registerEmployer(@RequestBody Employer employer) {
+    public ResponseEntity<?> registerEmployer(@RequestBody FastHireEmployer employer) {
         employer.setPassword(passwordEncoder.encode(employer.getPassword()));
         employer.setApproved(false); // default false until approved by SuperAdmin
-        Employer saved = employerRepo.save(employer);
+        FastHireEmployer saved = employerRepo.save(employer);
         return ResponseEntity.ok(saved);
     }
 
     // ✅ Employer Login
     @PostMapping("/loginEmployer")
-    public ResponseEntity<?> loginEmployer(@RequestBody Employer loginRequest) {
-        Optional<Employer> employerOpt = employerRepo.findByEmail(loginRequest.getEmail());
+    public ResponseEntity<?> loginEmployer(@RequestBody FastHireEmployer loginRequest) {
+        Optional<FastHireEmployer> employerOpt = employerRepo.findByEmail(loginRequest.getEmail());
 
         if (employerOpt.isPresent()) {
-            Employer employer = employerOpt.get();
+            FastHireEmployer employer = employerOpt.get();
             System.out.println("DB Password: " + employer.getPassword()); // hashed
             System.out.println("Login Password: " + loginRequest.getPassword()); // raw
 

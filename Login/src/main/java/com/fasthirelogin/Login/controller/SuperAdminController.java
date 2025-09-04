@@ -1,5 +1,5 @@
 package com.fasthirelogin.Login.controller;
-import com.fasthirelogin.Login.entity.SuperAdmin;
+import com.fasthirelogin.Login.entity.FastHireSuperAdmin;
 import com.fasthirelogin.Login.service.SuperAdminService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +16,17 @@ public class SuperAdminController {
     }
 
     @PostMapping("/createSuperAdmin")
-    public SuperAdmin create(@RequestBody SuperAdmin admin) {
+    public FastHireSuperAdmin create(@RequestBody FastHireSuperAdmin admin) {
         return service.create(admin);
     }
 
     @GetMapping("/getAllSuperAdmins")
-    public List<SuperAdmin> getAll() {
+    public List<FastHireSuperAdmin> getAll() {
         return service.getAll();
     }
 
     @PutMapping("/updateSuperAdmin/{id}")
-    public SuperAdmin update(@PathVariable Long id, @RequestBody SuperAdmin admin) {
+    public FastHireSuperAdmin update(@PathVariable Long id, @RequestBody FastHireSuperAdmin admin) {
         return service.update(id, admin);
     }
 

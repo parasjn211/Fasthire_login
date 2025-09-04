@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Employer {
+public class FastHireEmployer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

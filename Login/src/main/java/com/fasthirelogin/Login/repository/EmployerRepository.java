@@ -1,9 +1,9 @@
 package com.fasthirelogin.Login.repository;
-import com.fasthirelogin.Login.entity.Employer;
+import com.fasthirelogin.Login.entity.FastHireEmployer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface EmployerRepository extends JpaRepository<Employer, Long> {
-    Optional<Employer> findByEmail(String email);
+public interface EmployerRepository extends JpaRepository<FastHireEmployer, Long> {
+    Optional<FastHireEmployer> findByEmail(String email);
 }

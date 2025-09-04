@@ -19,6 +19,12 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Override
     public FastHireEmployer createEmployer(FastHireEmployer employer) {
+        // ✅ Check if email already exists
+        boolean exists = employerRepository.findByEmail(employer.getEmail()).isPresent();
+        if (exists) {
+            throw new RuntimeException("Employer with email " + employer.getEmail() + " already exists");
+        }
+
         return employerRepository.save(employer);
     }
 

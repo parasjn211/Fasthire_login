@@ -21,10 +21,17 @@ public class SuperAdminServiceImpl implements SuperAdminService {
 
     @Override
     public FastHireSuperAdmin create(FastHireSuperAdmin admin) {
+        // ✅ Check if email already exists
+        boolean exists = repo.findByEmail(admin.getEmail()).isPresent();
+        if (exists) {
+            throw new RuntimeException("SuperAdmin with email " + admin.getEmail() + " already exists");
+        }
+
         // ✅ Encode password before saving
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return repo.save(admin);
     }
+
 
     @Override
     public List<FastHireSuperAdmin> getAll() {

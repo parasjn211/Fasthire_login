@@ -22,8 +22,14 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ Public APIs
-                        .requestMatchers("/auth/**").permitAll()
+                        // ✅ Public APIs (no JWT required)
+                        .requestMatchers(
+                                "/auth/superAdminLogin",
+                                "/auth/loginEmployer"
+                        ).permitAll()
+
+                        // ✅ Employer Registration (needs JWT → only SuperAdmin can call)
+                        .requestMatchers("/auth/registerEmployer").hasRole("SUPERADMIN")
 
                         // ✅ SuperAdmin Endpoints
                         .requestMatchers("/superadmin/createSuperAdmin").permitAll()
@@ -32,8 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/superadmin/deleteSuperAdmin/**").hasAuthority("CAN_DELETE")
 
                         // ✅ Employer Endpoints
-                        .requestMatchers("/employers").permitAll() // allow creating employer
-                        .requestMatchers("/employers/**").hasRole("EMPLOYER") // all other employer APIs require EMPLOYER role
+                        .requestMatchers("/employers").permitAll()
+                        .requestMatchers("/employers/**").hasRole("EMPLOYER")
 
                         // ✅ Everything else requires authentication
                         .anyRequest().authenticated()

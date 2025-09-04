@@ -23,7 +23,7 @@ public class FastHireSuperAdmin {
     // 🔑 Personal details
     private String adminName;
     private String mobileNumber;
-    private String alternatePhone;
+    private String Phone;
     private String address;
     private String city;
     private String district;
@@ -32,8 +32,8 @@ public class FastHireSuperAdmin {
     private String pinCode;
 
     // 🔑 Identity
-    private Long aadhar;
-    private String pancard;
+    private Long aadharNo;
+    private String pancardNo;
 
     //Gst details
     private String gstNumber;
